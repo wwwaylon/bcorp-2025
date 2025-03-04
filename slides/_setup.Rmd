@@ -1,0 +1,83 @@
+```{r setup, include=FALSE}
+library("knitr")
+options(htmltools.dir.version = FALSE,
+        htmltools.preserve.raw = FALSE)
+opts_chunk$set(echo = FALSE, fig.align = "center")
+
+# remotes::install_github("gadenbuie/xaringanExtra")
+# remotes::install_github("hadley/emo")
+# remotes::install_github("gadenbuie/tweetrmd")
+library(xaringanExtra)
+library(xaringanthemer)
+library(emo)
+library(tweetrmd)
+
+my_colors <- c("#00B5AD", "#4B4F54")
+
+# Seattle Children's official colors include:
+#Teal ("#00B5AD")
+#Bright Green ("#8DC63F")
+#Light Blue ("#00A9E0")
+#Warm Gray ("#A7A9AC")
+#Dark Gray ("#4B4F54")
+
+# specify the packages of interest
+pkgs <- c(
+  "tidyverse", "moderndive", "dslabs", "dplyr", "kableExtra",
+  "infer", "janitor", "remotes", "knitr", "biosketchr",
+  "usethis", "ggplot2", "fontawesome", "scholar"
+)
+
+# use this function to check if each package is on the local machine
+# if a package is installed, it will be loaded
+# if any are not, the missing package(s) will be installed and loaded
+pkg_check <- function(x) {
+  if (!require(x, character.only = TRUE)) {
+    install.packages(x, dependencies = TRUE, repos = "https://cran.rstudio.com")
+    library(x, character.only = TRUE)
+  }
+}
+lapply(pkgs, pkg_check)
+
+if (!require("fontawesome")) {
+  remotes::install_github("rstudio/fontawesome")
+}
+
+if (!require("countdown")) {
+  remotes::install_github("gadenbuie/countdown")
+}
+
+```
+
+```{r extras-styling, include = FALSE}
+use_xaringan_extra(c("tile_view", "clipboard"))
+
+style_mono_accent(
+  base_color = my_colors[1]
+  , header_font_google = google_font("Poppins")
+  , header_h1_font_size = "36pt"
+  , text_font_google = google_font("Open Sans")
+  , text_font_size = "22pt"
+  , text_color = "#3a3a3a"
+  , code_font_size = "1.1rem"
+  , outfile = "src/xaringan-themer.css"
+)
+```
+
+```{r}
+add_overlay <- function(..., label = NULL, label_style = NULL) {
+  el <- list(...)
+  
+  y <- '<div id="overlay-highlight"'
+  if(length(el) > 0) {
+    y <- c(y, 'style="', glue::glue('{names(el)}:{el};'))
+  }
+  y <- c(y, '">')
+  
+  if(!is.null(label)) {
+    y <- c(y, glue::glue('<span" class="vertical-center"" style="{label_style}">{label}</span>'))
+  }
+  
+  knitr::asis_output(glue::glue_collapse(c(y, "</div>")))
+}
+```

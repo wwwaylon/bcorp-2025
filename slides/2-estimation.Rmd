@@ -1,0 +1,685 @@
+---
+title: "Latent variable modeling: A practical guide"
+subtitle  : "<small>Estimation and Model Fit</small>"
+author: "`r paste(params$author, collapse = ' & ')`"
+date: "`r paste0(params$location, ', ', params$date)`"
+params:
+  author: ["Author Name"]
+  date: "Placeholder Date"
+  location: "Placeholder Location"
+---
+exclude: true
+
+```{r child = "_setup.Rmd"}
+```
+
+---
+
+## ML estimation (the default)
+
+- ML identifies the population parameters that are most likely given the observed data
+- A likelihood (or log-likelihood) function is used to quantify how well the proposed parameters explain the observed data.
+- ML requires a population distribution (normal)
+
+---
+
+class: center, middle
+
+## ML estimation `r emo::ji("smirk")` 
+
+A density function gives the shape of the normal curve
+
+$$ 
+L_i = {\frac{1}{\sqrt{2 \pi \sigma^2}} e^{-.5\frac{\color{#8DC63F}{(Y_i - \mu)}^2 }{\color{#8DC63F}{\sigma}^2} }} 
+$$
+.small[
+$L_i$ (the likelihood) gives the relative probability that $Y_i$ came from a normal distribution with a particular mean and variance.
+]
+
+---
+
+class: center, middle
+
+.pull-right-60[
+
+```{r, out.width = "450px", out.height = "425px", echo = F, message=FALSE, warning=FALSE, dpi = 300}
+library(dplyr)
+library(ggplot2)
+library(smplot2)
+
+# Data for each row in the table
+ID <- 1:20
+var1 <- c(36.6, 41.8, 42.6, 43.1, 43.4, 44.2, 44.9, 46.3, 48.6, 49.0, 
+            50.0, 51.6, 54.6, 54.8, 55.7, 57.2, 57.6, 60.3, 60.9, 65.3)
+
+data1 <- data.frame(ID, var1)
+
+# Data for each row in the table
+ID <- 1:20
+var1 <- c(36.6, 41.8, 42.6, 43.1, 43.4, 44.2, 44.9, 46.3, 48.6, 49.0, 
+            50.0, 51.6, 54.6, 54.8, 55.7, 57.2, 57.6, 60.3, 60.9, 65.3)
+var2 <- c(40.0, 40.0, 35.0, 43.0, 42.6, 39.0, 45.0, 45.2, 50.0, 40.0, 
+            NA, NA, NA, NA, NA, NA, NA, NA, NA, NA)
+
+# Create the main data frame
+datam <- data.frame(ID, var1, var2)
+
+#--- fiml 
+
+mu <- mean(data1$var1, na.rm=T)
+sigma <- sd(data1$var1, na.rm=T)
+
+data1$Li <- round(1 / sqrt(2 * pi * sigma^2) * exp(((data1$var1 - mu)^2 / sigma^2) * -0.5), 6) 
+
+```
+
+```{r, message = FALSE, warning = FALSE}
+
+library(dplyr)
+library(knitr)
+library(kableExtra)
+
+# Find the largest value in the last column
+data1 <- data1 %>%
+  mutate(across(
+    .cols = ncol(data1),
+    .fns = ~ ifelse(. == max(., na.rm = TRUE), 
+                    paste0("<b style='font-size:16px;'>", ., "</b>"), 
+                    .)
+  ))
+
+# Rename the last column to "L_i" with a subscript
+colnames(data1)[ncol(data1)] <- "<div style='text-align: center;'>L<sub><i>i</i></sub></div>"
+
+# Create the table with kable and apply styling
+knitr::kable(
+  data1,
+  format = "html",
+  align = "ll",
+  escape = FALSE
+) %>%
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"), 
+    font_size = 13.5, full_width = TRUE
+  )
+
+```
+
+]
+
+.pull-left-10[
+
+### ML estimation
+
+.small[
+Applying the density function gives the relative probability $\text{(}L_i\text{)}$ of each score from this normal distribution. 
+
+
+**complete data:** 
+
+var1 $\text{( }\mu$ = `r sprintf("%.2f", mu)`, $\sigma$ = `r sprintf("%.2f", sigma)` $\text{)}$
+]
+
+]
+
+---
+
+class: center, middle
+
+```{r, out.width = "600px", out.height = "600px", echo = F, message=FALSE, warning=FALSE, dpi = 300}
+
+# Load necessary library
+library(ggplot2)
+
+data1$likelihood <- 1 / sqrt(2 * pi * sigma^2) * exp(-0.5 * ((data1$var1 - mu)^2) / sigma^2)
+
+df <- data.frame(x = seq(25, 75, by = 0.5))
+df$likelihood <- 1 / sqrt(2 * pi * sigma^2) * exp(-0.5 * ((df$x - mu)^2) / sigma^2)
+
+# Define the x positions for vertical lines and find the closest mu values
+select_x1 <- 45
+select_x2 <- 62
+
+
+# Create the plot
+ggplot(df, aes(x = x, y = likelihood)) +
+  geom_line(color = "#00A9E0", size = 3.50) +
+  
+  scale_y_continuous(breaks = seq(0, max(df$likelihood)), limits = c(0, max(df$likelihood)+.01), expand = c(0, 0))+
+
+  # Left 
+  annotate("text", x = select_x1 - 7, y = df$likelihood[df$x == select_x1], 
+           label = bquote(italic(L)[.(sprintf("%.0f", select_x1))] == .(sprintf("%.2f", df$likelihood[df$x == select_x1]))), 
+           color = "#4B4F54", size = 6)+
+  geom_segment(aes(x = select_x1, y = min(likelihood), xend = select_x1, yend = df$likelihood[df$x == select_x1]), 
+               color = "#A7A9AC", linetype = "dashed", size = 1) +
+  geom_point(aes(x = select_x1, y = df$likelihood[df$x == select_x1]), color = "#8DC63F", size = 6) +
+  
+  # Right
+  annotate("text", x = select_x2 + 7, y = df$likelihood[df$x == select_x2], 
+           label = bquote(italic(L)[.(sprintf("%.0f", select_x2))] == .(sprintf("%.2f", df$likelihood[df$x == select_x2]))),
+           color = "#4B4F54", size = 6) +
+  geom_segment(aes(x = select_x2, y = min(likelihood), xend = select_x2, yend = df$likelihood[df$x == select_x2]), 
+               color = "#A7A9AC", linetype = "dashed", size = 1) +
+  geom_point(aes(x = select_x2, y = df$likelihood[df$x == select_x2]), color = "#8DC63F", size = 6) +
+
+  labs(title = "", x = "Mean (var1)", y = "Likelihood") +
+  theme(
+    plot.margin = unit(c(1, 1, 1, 1), "cm"),
+    panel.background = element_blank(),
+    plot.title = element_text(size = 22, face = "bold", hjust = 0.5, margin = margin(b = 15)),
+    axis.line = element_line(color = "black"),
+    axis.title = element_text(size = 22, color = "black", face = "bold"),
+    axis.text = element_text(size = 14, color = "black"),
+    axis.text.x = element_text(margin = margin(t = 10)),
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    axis.title.x = element_text(size = 14, color = "black"),
+    axis.ticks.y = element_blank()
+  )
+
+```
+
+---
+
+class: center, middle
+
+.pull-right-40[
+
+```{r, out.width = "600px", out.height = "600px", echo = F, message=FALSE, warning=FALSE, dpi = 300}
+library(dplyr)
+library(ggplot2)
+library(smplot2)
+
+# Data for each row in the table
+ID <- 1:20
+var1 <- c(36.6, 41.8, 42.6, 43.1, 43.4, 44.2, 44.9, 46.3, 48.6, 49.0, 
+            50.0, 51.6, 54.6, 54.8, 55.7, 57.2, 57.6, 60.3, 60.9, 65.3)
+
+data1 <- data.frame(ID, var1)
+
+# Data for each row in the table
+ID <- 1:20
+var1 <- c(36.6, 41.8, 42.6, 43.1, 43.4, 44.2, 44.9, 46.3, 48.6, 49.0, 
+            50.0, 51.6, 54.6, 54.8, 55.7, 57.2, 57.6, 60.3, 60.9, 65.3)
+var2 <- c(40.0, 40.0, 35.0, 43.0, 42.6, 39.0, 45.0, 45.2, 50.0, 40.0, 
+            NA, NA, NA, NA, NA, NA, NA, NA, NA, NA)
+
+# Create the main data frame
+datam <- data.frame(ID, var1, var2)
+
+#--- fiml 
+
+mu <- mean(data1$var1, na.rm=T)
+sigma <- sd(data1$var1, na.rm=T)
+
+data1$Li <- round(1 / sqrt(2 * pi * sigma^2) * exp(((data1$var1 - mu)^2 / sigma^2) * -0.5), 6)
+data1$logLi <- round(log(1 / sqrt(2 * pi * sigma^2) * exp(((data1$var1 - mu)^2 / sigma^2) * -0.5)), 6)
+
+options(scipen = 999)
+smallval <- prod(data1$Li)
+smallval <- as.character(smallval)
+options(scipen = 0)
+
+sumfit <- round(sum(data1$logLi),2)
+
+```
+
+```{r, message = FALSE, warning = FALSE}
+
+library(dplyr)
+library(knitr)
+library(kableExtra)
+
+# Find the largest value in the last column
+data1 <- data1 %>%
+  mutate(across(
+    .cols = ncol(data1),
+    .fns = ~ ifelse(. == max(., na.rm = TRUE), 
+                    paste0("<b style='font-size:16px;'>", ., "</b>"), 
+                    .)
+  ))
+
+# Rename the last column to "L_i" with a subscript
+colnames(data1)[ncol(data1)-1] <- "<div style='text-align: center;'>L<sub><i>i</i></sub></div>"
+colnames(data1)[ncol(data1)] <- "<div style='text-align: center;'>logL<sub><i>i</i></sub></div>"
+
+
+# Create the table with kable and apply styling
+knitr::kable(
+  data1,
+  format = "html",
+  align = "ll",
+  escape = FALSE
+) %>%
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"), 
+    font_size = 13.5, full_width = TRUE
+  )
+
+```
+
+]
+
+.pull-left-40[
+
+### Maximum Likelihood
+
+.small[
+Multiple each $(L_i)$ to get sample likelihood.
+
+<small><small><small>`r smallval`</small></small></small> 
+<small><small>Fit of this data to $\mu$ = `r sprintf("%.2f", mu)`, $\sigma$ = `r sprintf("%.2f", sigma)`</small></small> 
+
+<small>**To avoid small numbers, we take the log of the likelihood.**</small>  
+
+Add each $logL_i$ to get sample loglikelihood.
+
+`r sumfit`
+
+]
+
+]
+
+---
+
+class: center, middle
+
+```{r, out.width = "600px", out.height = "600px", echo = F, message=FALSE, warning=FALSE, dpi = 300}
+library(dplyr)
+library(ggplot2)
+library(smplot2)
+
+# Data for each row in the table
+ID <- 1:20
+var1 <- c(36.6, 41.8, 42.6, 43.1, 43.4, 44.2, 44.9, 46.3, 48.6, 49.0, 
+            50.0, 51.6, 54.6, 54.8, 55.7, 57.2, 57.6, 60.3, 60.9, 65.3)
+
+data1 <- data.frame(ID, var1)
+
+#--- fiml 
+
+mu1 <- 30
+mu2 <- 40
+mu3 <- 50
+mu4 <- 60
+mu5 <- 70
+
+sigma <- sd(data1$var1, na.rm=T)
+
+data1$logLi1 <- round(log(1 / sqrt(2 * pi * sigma^2) * exp(((data1$var1 - mu1)^2 / sigma^2) * -0.5)), 3)
+data1$logLi2 <- round(log(1 / sqrt(2 * pi * sigma^2) * exp(((data1$var1 - mu2)^2 / sigma^2) * -0.5)), 3)
+data1$logLi3 <- round(log(1 / sqrt(2 * pi * sigma^2) * exp(((data1$var1 - mu3)^2 / sigma^2) * -0.5)), 3)
+data1$logLi4 <- round(log(1 / sqrt(2 * pi * sigma^2) * exp(((data1$var1 - mu4)^2 / sigma^2) * -0.5)), 3)
+data1$logLi5 <- round(log(1 / sqrt(2 * pi * sigma^2) * exp(((data1$var1 - mu5)^2 / sigma^2) * -0.5)), 3)
+
+#data1$logLi <- round(log(1 / sqrt(2 * pi * sigma^2) * exp(((data1$var1 - mu)^2 / sigma^2) * -0.5)), 6)
+
+sumfit1 <- round(sum(data1$logLi1), 2)
+sumfit2 <- round(sum(data1$logLi2), 2)
+sumfit3 <- round(sum(data1$logLi3), 2)
+sumfit4 <- round(sum(data1$logLi4), 2)
+sumfit5 <- round(sum(data1$logLi5), 2)
+
+new_row <- c("", "", "", "", "", "", "")
+
+data1 <- rbind(data1, new_row)
+
+new_row <- c("", "", sumfit1, sumfit2, sumfit3, sumfit4, sumfit5)
+
+data1 <- rbind(data1, new_row)
+
+```
+
+```{r, message = FALSE, warning = FALSE}
+
+library(dplyr)
+library(knitr)
+library(kableExtra)
+
+# Rename the last column to "L_i" with a subscript
+colnames(data1)[ncol(data1)-4] <- paste0("\u03BC = ", mu1)
+colnames(data1)[ncol(data1)-3] <- paste0("\u03BC = ", mu2)
+colnames(data1)[ncol(data1)-2] <- paste0("\u03BC = ", mu3)
+colnames(data1)[ncol(data1)-1] <- paste0("\u03BC = ", mu4)
+colnames(data1)[ncol(data1)] <- paste0("\u03BC = ", mu5)
+
+# Bold the entire last row
+data1 <- data1 %>%
+  mutate(across(
+    everything(),  # Apply to all columns
+    .fns = ~ ifelse(row_number() == n(), 
+                    paste0("<b style='font-size:12px;'>", ., "</b>"), 
+                    .)
+  ))
+
+# Create the table with kable and apply styling
+knitr::kable(
+  data1,
+  format = "html",
+  align = "ll",
+  escape = FALSE
+) %>%
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"), 
+    font_size = 11, full_width = TRUE
+  )
+
+```
+
+---
+
+class: center, middle
+
+.pull-right-40[
+
+```{r, out.width = "600px", out.height = "600px", echo = F, message=FALSE, warning=FALSE, dpi = 300}
+library(dplyr)
+library(ggplot2)
+library(smplot2)
+
+# Data for each row in the table
+ID <- 1:20
+var2 <- c(40.0, 40.0, 35.0, 43.0, 42.6, 39.0, 45.0, 45.2, 50.0, 40.0, 
+            NA, NA, NA, NA, NA, NA, NA, NA, NA, NA)
+
+data2 <- data.frame(ID, var2)
+
+mu1 <- 30
+mu2 <- 40
+mu3 <- 50
+mu4 <- 60
+mu5 <- 70
+
+sigma <- sd(data2$var2, na.rm=T)
+
+data2$logLi1 <- round(log(1 / sqrt(2 * pi * sigma^2) * exp(((data2$var2 - mu1)^2 / sigma^2) * -0.5)), 3)
+data2$logLi2 <- round(log(1 / sqrt(2 * pi * sigma^2) * exp(((data2$var2 - mu2)^2 / sigma^2) * -0.5)), 3)
+data2$logLi3 <- round(log(1 / sqrt(2 * pi * sigma^2) * exp(((data2$var2 - mu3)^2 / sigma^2) * -0.5)), 3)
+data2$logLi4 <- round(log(1 / sqrt(2 * pi * sigma^2) * exp(((data2$var2 - mu4)^2 / sigma^2) * -0.5)), 3)
+data2$logLi5 <- round(log(1 / sqrt(2 * pi * sigma^2) * exp(((data2$var2 - mu5)^2 / sigma^2) * -0.5)), 3)
+
+sumfit1 <- round(sum(data2$logLi1, na.rm=T), 2)
+sumfit2 <- round(sum(data2$logLi2, na.rm=T), 2)
+sumfit3 <- round(sum(data2$logLi3, na.rm=T), 2)
+sumfit4 <- round(sum(data2$logLi4, na.rm=T), 2)
+sumfit5 <- round(sum(data2$logLi5, na.rm=T), 2)
+
+new_row <- c("", "", "", "", "", "", "")
+
+data2 <- rbind(data2, new_row)
+
+new_row <- c("", "", sumfit1, sumfit2, sumfit3, sumfit4, sumfit5)
+
+data2 <- rbind(data2, new_row)
+
+```
+
+```{r, message = FALSE, warning = FALSE}
+
+library(dplyr)
+library(knitr)
+library(kableExtra)
+
+# Rename the last column to "L_i" with a subscript
+colnames(data2)[ncol(data2)-4] <- paste0("\u03BC = ", mu1)
+colnames(data2)[ncol(data2)-3] <- paste0("\u03BC = ", mu2)
+colnames(data2)[ncol(data2)-2] <- paste0("\u03BC = ", mu3)
+colnames(data2)[ncol(data2)-1] <- paste0("\u03BC = ", mu4)
+colnames(data2)[ncol(data2)] <- paste0("\u03BC = ", mu5)
+
+# Bold the entire last row
+data2 <- data2 %>%
+  mutate(across(
+    everything(),  # Apply to all columns
+    .fns = ~ ifelse(row_number() == n(), 
+                    paste0("<b style='font-size:12px;'>", ., "</b>"), 
+                    .)
+  ))
+
+data2 <- data2 %>%
+  dplyr::mutate(across(2:7, ~ ifelse(is.na(.), "", 
+                                     if (is.numeric(.)) sprintf("%.2f", .) else as.character(.))))
+
+# Create the table with kable and apply styling
+knitr::kable(
+  data2,
+  format = "html",
+  align = "ll",
+  escape = FALSE
+) %>%
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"), 
+    font_size = 11, full_width = TRUE
+  )
+
+```
+]
+
+.pull-left-40[
+<small><small><small>*Possible* population means for **var2**</small></small></small> 
+
+```{r, out.width = "600px", out.height = "600px", echo = F, message=FALSE, warning=FALSE, dpi = 300}
+
+library(ggplot2)
+library(gganimate)
+library(gifski)
+library(grDevices)
+
+# Define the new range for x-axis (means of variable var1)
+means <- seq(30, 70, length.out = 50)
+
+# Create a data frame for the animation
+data <- data.frame(
+  x = rep(seq(30, 70, length.out = 100), length(means)),
+  mean = rep(means, each = 100)
+)
+
+# Compute Log-Likelihood (example formula)
+# Replace dnorm density with log-likelihood (e.g., sum of log(density) or log probabilities)
+# Assuming standard deviation = 5
+data$y <- dnorm(data$x, mean = data$mean, sd = 5, log = TRUE)
+
+custom_ticks <- c(40.0, 40.0, 35.0, 43.0, 42.6, 39.0, 45.0, 45.2, 50.0, 40.0)
+
+# Create the plot with ggplot2
+p <- ggplot(data, aes(x = x, y = y, group = mean)) +
+  geom_line(color = "#00A9E0", linewidth = 2) +
+  labs(
+    title = "",
+    x = "Mean (var2)",
+    y = "Log-Likelihood"
+  ) +
+  # Add vertical lines for custom tick values
+  geom_vline(
+    xintercept = custom_ticks,
+    color = "#8DC63F",
+    linetype = "dashed",
+    size = 0.8
+  ) +
+  theme(
+    plot.margin = unit(c(1, 1, 1, 1), "cm"),
+    panel.background = element_blank(),
+    plot.title = element_text(size = 22, face = "bold", hjust = 0.5, margin = margin(b = 15)),
+    axis.line = element_line(color = "black"),
+    axis.title = element_text(size = 22, color = "black", face = "bold"),
+    axis.text = element_text(size = 24, color = "black"),
+    axis.text.x = element_text(margin = margin(t = 10)),
+    axis.title.x = element_text(size = 24, color = "black")
+  ) +
+  transition_states(mean, transition_length = 1, state_length = 1) +
+  ease_aes('linear')
+
+animation_filename <- here::here("slides", "img", "moving_plot.gif")
+
+# Animate and save as a .gif
+#anim <- animate(p, nframes = 200, fps = 40, width = 900, height = 600, renderer = gifski_renderer())
+#anim_save(animation_filename, animation = anim)
+
+```
+
+`r knitr::include_graphics(animation_filename)`
+
+.small[
+<small>Audition different parameters to quantify how well the proposed values explain the observed data.</small> 
+
+<small>Green dotted lines represent observed values for var2.</small> 
+
+<small>.highlight[*Handling Missing Data*.]<br> 
+Listwise var2 *M* = 41.98.</small>
+]
+
+]
+
+---
+
+```{r, echo=FALSE, eval=F}
+
+# Create a matrix for the covariance table
+cov_matrix <- matrix(c(
+  0.64, NA, NA,
+  0.56, 0.81, NA,
+  0.48, 0.53, 0.77
+), nrow = 3, byrow = TRUE)
+
+# Convert the matrix to a data frame and add row/column names
+cov_df <- as.data.frame(cov_matrix)
+colnames(cov_df) <- c("X1", "X2", "X3")
+rownames(cov_df) <- c("X1", "X2", "X3")
+
+# Create the table with kable
+t4 <- kable(cov_df, format = "html", align = "c") %>%
+  kable_styling(position = "center", font_size = 12) 
+
+
+# Create a matrix for the covariance table
+cov_matrix2 <- matrix(c(
+  0.60, NA, NA,
+  0.52, 0.88, NA,
+  0.53, 0.58, 0.73
+), nrow = 3, byrow = TRUE)
+
+# Convert the matrix to a data frame and add row/column names
+cov_df2 <- as.data.frame(cov_matrix2)
+colnames(cov_df2) <- c("X1", "X2", "X3")
+rownames(cov_df2) <- c("X1", "X2", "X3")
+
+# Create the table with kable
+t5 <- kable(cov_df2, format = "html", align = "c") %>%
+  kable_styling(position = "center", font_size = 12) 
+
+```
+
+name: fit
+class: middle, center
+
+## Model Fit
+
+<img class="rectangle" src="img/fit.png" width="800px"/>
+
+<br>
+
+<medium> Your data = Model-implied? </medium><br>
+<span style="font-size: 50%;">
+Chi-square $(\chi^2)$ = -2 * (Null Loglikelihood - Alternative Loglikelihood)
+</span>
+
+
+---
+
+class: middle, left
+
+<img class="rectangle" src="img/modelfitlineRMSEA.png" width="700px"/>
+
+.pull-left[
+## <span style="font-size: 80%;">Absolute Model Fit: </span>   
+<span style="font-size: 90%;">.highlight[How far from perfect]: </span>  
+<span style="font-size: 90%;"> **RMSEA**, **SRMR** </span>
+]
+
+.pull-right[
+> <span style="font-size: 75%;"> $>$ **.10** poor fit</span> <br>
+> <span style="font-size: 75%;"> **.08 - .10** mediocre fit</span> <br>
+> <span style="font-size: 75%;"> **.05 - .08** acceptable fit</span> <br>
+> <span style="font-size: 75%;"> **.01 - .05** close fit</span> <br>
+> <span style="font-size: 75%;"> **.00** exact fit</span>
+]
+
+---
+
+class: middle, left
+
+<img class="rectangle" src="img/modelfitlineCFI.png" width="700px"/>
+
+.pull-left[
+## <span style="font-size: 80%;">Relative Model Fit: </span>   
+<span style="font-size: 90%;">.highlight[How far from worst]: </span><br> 
+<span style="font-size: 90%;"> **TLI (NNFI)**, **CFI**... </span>
+]
+
+.pull-right[
+> <span style="font-size: 75%;"> $<$ **.85** poor fit</span> <br>
+> <span style="font-size: 75%;"> **.85-.90** mediocre fit</span> <br>
+> <span style="font-size: 75%;"> **.90-.95**	acceptable fit</span> <br>
+> <span style="font-size: 75%;"> **.95-.99** close fit</span> <br>
+> <span style="font-size: 75%;"> **1.00** exact fit</span>
+]
+
+<span style="font-size: 65%;">*Also: Modification indices, Fitted residual matrix, Parameter estimates…* </span>
+
+---
+
+class: middle, left
+
+.pull-left-40[
+<br>
+<small> **Model Fit from Mplus** </small>
+<br>
+
+<img class="rectangle" src="img/modelfit.png" width="325px"/>
+
+]
+
+.pull-right-60[
+<span style="font-size: 65%;">**Chi-Square** = -2[(*-1365.848*) - (*-1351.359*)] = $\color{#4CAF50}{28.978}$</span>
+
+***
+
+<span style="font-size: 65%;">**DF** = $\frac{v(v+1)}{2}-p$ = $\frac{6(6+1)}{2}-13$ = $\color{#4CAF50}{8}$</span>
+
+***
+
+<span style="font-size: 65%;">**RMSEA** = $\sqrt{\frac{\frac{\chi^2_T - df_T}{N}}{df_T}}$ = $\sqrt{\frac{\frac{28.978 - 8}{379}}{8}}$ = $\color{#f44336}{0.083}$</span>
+
+***
+
+<span style="font-size: 65%;">**CFI** = $\frac{(\chi^2_0 - df_0)-(\chi^2_T - df_T)}{(\chi^2_0 - df_0)}$<br> 
+= $\frac{(1939.234 - 15)-(28.978 - 8)}{(1939.234 - 15)}$ = $\color{#2196F3}{0.989}$</span>
+
+***
+
+<span style="font-size: 65%;">**TLI** = $\frac{(\frac{\chi^2_0} {df_0})-(\frac{\chi^2_T} {df_T})}{(\frac{\chi^2_0} {df_0})-1}$ = $\frac{(\frac{1939.234} {15})-(\frac{28.978} {8})}{(\frac{1939.234} {15})-1}$ = $\color{#FF9800}{0.980}$</span><br>
+]
+
+---
+
+class: left, middle
+
+# Reporting Model Fit `r emo::ji("page_facing_up")` 
+
+.small[
+> Model estimation was conducted using maximum likelihood estimation in Mplus 8. Model fit was assessed using multiple indices, including the root mean square error of approximation (RMSEA) and its 90% confidence interval (Steiger, 1990), the Tucker-Lewis Index (TLI; Bentler & Bonett, 1980), and the Comparative Fit Index (CFI; Bentler, 1990). **Model fit was considered acceptable if RMSEA ≤ .08, TLI ≥ .90, and CFI ≥ .90 (Chen, 2007; Hu & Bentler, 1999). The overall goodness-of-fit indices indicated that the initial CFA model fit the data well, x2(24, n = 144) = 36.14; RMSEA = .059 (.000; .097) ; CFI = .980; TLI/NNFI = .970.** 
+]
+
+.small[
+> **Extended Reporting**. Standardized residuals and modification indices indicated no areas of strain in the model solution. All factor loadings were statistically significant (p < 0.001)... 
+]
+
+---
+
+class: center, middle
+
+# Any questions?
+
+
+
