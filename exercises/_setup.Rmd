@@ -1,0 +1,64 @@
+
+```{r custom-boxes, include = FALSE}
+
+# devtools::install_github("koncina/unilur")
+knitr::opts_template$set(
+  clues = list(
+    box.title = "Clues"
+    , box.body = list(fill = "#fff9dc", colour = "black")
+    , box.header = list(fill = "#ffec8b", colour = "black")
+    , box.icon = "fa-search"
+    , box.collapse = TRUE
+  ), 
+    solution = list(
+    box.title = "Solution"
+    , box.body = list(fill = "#e6f9dc", colour = "black")
+    , box.header = list(fill = "#d4f5a1", colour = "black")
+    , box.icon = "fa-search"
+    , box.collapse = TRUE
+), 
+    exercise = list(
+    box.title = "Exercise"
+    , box.body = list(fill = "#dcefff", colour = "black")
+    , box.header = list(fill = "#a1d4f5", colour = "black")
+    , box.icon = "fa-search"
+    , box.collapse = FALSE
+)
+)
+
+
+```
+
+```{r klippy, echo = FALSE}
+# remotes::install_github("rlesur/klippy")
+klippy::klippy(position = c("top", "right"))
+```
+
+```{css, echo = FALSE}
+.highlight {
+  background-color: rgb(255, 150, 79, 0.75); /*#ffcc66;*/
+}
+
+a:not([href^="#"]):not([href^="/"])::after {
+  font-family: 'FontAwesome';
+  content: " \f08e";
+  font-size: 1rem;
+  vertical-align: top;
+}
+
+a[target="_blank"]:after {
+  font-family: 'FontAwesome';
+  content: " \f08e";
+  font-size: 1rem;
+  vertical-align: top;
+}
+
+pre {
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /*Internet Explorer 5.5+ */
+  word-break: break-word;       /*Internet Explorer 5.5+ */
+}
+```

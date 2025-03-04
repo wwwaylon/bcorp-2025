@@ -1,0 +1,61 @@
+TITLE: Manifest moderation
+
+DATA: FILE = mydata2.dat;
+
+VARIABLE: 
+NAMES = ID Age PTSD1 PTSD2 PTSD3 SUP1 SUP2 SUP3 BCOPE1 BCOPE2 BCOPE3 Reint; 
+
+MISSING = ALL (-999); 
+
+USEVARIABLES = X W Y XW;
+
+DEFINE:
+W = (PTSD1 + PTSD2 + PTSD3) / 3 ;
+X = (BCOPE1 + BCOPE2 + BCOPE3)/3 ;
+Y = (SUP1 + SUP2 + SUP3)/3 ;
+
+! Create interaction term
+! Note that it has to be placed at end of USEVARIABLES subcommand above
+XW = X*W;
+
+ANALYSIS:
+   TYPE = GENERAL;
+   ESTIMATOR = ML;
+
+! In model statement name each path using parentheses
+MODEL:
+   [Y] (b0);
+   Y ON X (b1);
+   Y ON W (b2);
+   Y ON XW (b3);
+
+! Use model constraint subcommand to test simple slopes
+! You need to pick low, medium and high moderator values,
+! for example, of 1 SD below mean, mean, 1 SD above mean
+
+MODEL CONSTRAINT:
+   NEW(LOW_W MED_W HIGH_W SIMP_LO SIMP_MED SIMP_HI);
+
+   LOW_W = 0;   ! Chosen low value of W
+   MED_W = 1.5;   ! Chosen medium value of W
+   HIGH_W = 3;   ! Chosen high value of W
+
+! Now calc simple slopes for each value of W
+   SIMP_LO = b1 + b3*LOW_W;
+   SIMP_MED = b1 + b3*MED_W;
+   SIMP_HI = b1 + b3*HIGH_W;
+
+! Use loop plot to plot model for low, med, high values of W
+! NOTE - values of 1,5 in LOOP() statement need to be replaced by
+! logical min and max limits of predictor X used in analysis
+   PLOT(LOMOD MEDMOD HIMOD);
+   LOOP(XVAL,1,4,0.5);
+   LOMOD = (b0 + b2*LOW_W) + (b1 + b3*LOW_W)*XVAL;
+   MEDMOD = (b0 + b2*MED_W) + (b1 + b3*MED_W)*XVAL;
+   HIMOD = (b0 + b2*HIGH_W) + (b1 + b3*HIGH_W)*XVAL;
+
+PLOT:
+   TYPE = plot2;
+
+OUTPUT:
+   STAND CINT;

@@ -1,0 +1,141 @@
+---
+title     : "Exercises: "
+subtitle  : "Latent variable modeling: A practical guide"
+---
+
+```{r child = "_setup.Rmd"}
+```
+
+```{block, opts.label = "exercise", box.title = "Exercise 1", box.body = list(fill = "white"), box.icon = "fa-star"}
+What is the primary goal of Confirmatory Factor Analysis (CFA)?
+```
+
+```{block, opts.label = "clues", box.icon = "fa-lightbulb"}
+Think about how CFA differs from Exploratory Factor Analysis (EFA) in terms of hypothesis testing.
+```
+
+```{block, box.title = "Solution 1", box.icon = "fa-check", solution = FALSE}
+The primary goal of CFA is to test whether a hypothesized factor structure fits the observed data.
+```
+
+```{block, opts.label = "exercise", box.title = "Exercise 2", box.body = list(fill = "white"), box.icon = "fa-star"}
+In CFA, what does a factor loading represent?
+```
+
+```{block, opts.label = "clues", box.icon = "fa-lightbulb"}
+Consider how strongly each observed variable is related to its underlying latent factor.
+```
+
+```{block, box.title = "Solution 2", box.icon = "fa-check", solution = FALSE}
+A factor loading represents the strength and direction of the relationship between an observed variable and its latent factor.
+```
+
+```{block, opts.label = "exercise", box.title = "Exercise 3", box.body = list(fill = "white"), box.icon = "fa-star"}
+What is the difference between standardized and unstandardized factor loadings in CFA?
+```
+
+```{block, opts.label = "clues", box.icon = "fa-lightbulb"}
+Think about the role of measurement units and comparability across variables.
+```
+
+```{block, box.title = "Solution 3", box.icon = "fa-check", solution = FALSE}
+Unstandardized loadings retain the original scale of measurement, while standardized loadings rescale values so that comparisons can be made across variables.
+```
+
+```{block, opts.label = "exercise", box.title = "Exercise 4", box.body = list(fill = "white"), box.icon = "fa-star"}
+Which fit indices are commonly used to evaluate CFA model fit?
+```
+
+```{block, opts.label = "clues", box.icon = "fa-lightbulb"}
+Look for indices that compare model-implied covariances with observed covariances.
+```
+
+```{block, box.title = "Solution 4", box.icon = "fa-check", solution = FALSE}
+Common fit indices include the Comparative Fit Index (CFI), Tucker-Lewis Index (TLI), Root Mean Square Error of Approximation (RMSEA), and Standardized Root Mean Square Residual (SRMR).
+```
+
+```{block, opts.label = "exercise", box.title = "Exercise 5", box.body = list(fill = "white"), box.icon = "fa-star"}
+How do you determine whether a CFA model has good fit?
+```
+
+```{block, opts.label = "clues", box.icon = "fa-lightbulb"}
+Consider commonly accepted thresholds for model fit indices.
+```
+
+```{block, box.title = "Solution 5", box.icon = "fa-check", solution = FALSE}
+A CFA model is considered to have good fit when CFI and TLI are above 0.90 (preferably >0.95), RMSEA is below 0.06, and SRMR is below 0.08.
+```
+
+```{block, opts.label = "exercise", box.title = "Exercise 6", box.body = list(fill = "white"), box.icon = "fa-star"}
+What are the common estimation methods used in CFA, and how do they differ?
+```
+
+```{block, opts.label = "clues", box.icon = "fa-lightbulb"}
+Consider the assumptions about data distribution that each method makes.
+```
+
+```{block, box.title = "Solution 6", box.icon = "fa-check", solution = FALSE}
+Common estimation methods include:
+- Maximum Likelihood (ML): Assumes multivariate normality and is most commonly used
+- Weighted Least Squares (WLS): Appropriate for non-normal and categorical data
+- Robust Maximum Likelihood (MLR): Uses robust standard errors to handle minor violations of normality
+- Unweighted Least Squares (ULS): Makes no distributional assumptions but provides no standard errors
+```
+
+```{block, opts.label = "exercise", box.title = "Exercise 7", box.body = list(fill = "white"), box.icon = "fa-star"}
+When evaluating model fit, what is the difference between absolute and incremental fit indices?
+```
+
+```{block, opts.label = "clues", box.icon = "fa-lightbulb"}
+Think about what baseline each type of index uses for comparison.
+```
+
+```{block, box.title = "Solution 7", box.icon = "fa-check", solution = FALSE}
+Absolute fit indices measure how well the specified model reproduces the observed data without comparison to a baseline model (e.g., Chi-square, RMSEA, SRMR). Incremental fit indices compare the specified model to a more restricted baseline model, typically the null model (e.g., CFI, TLI).
+```
+
+```{block, opts.label = "exercise", box.title = "Exercise 8", box.body = list(fill = "white"), box.icon = "fa-star"}
+What steps should you take when your CFA model shows poor fit?
+```
+
+```{block, opts.label = "clues", box.icon = "fa-lightbulb"}
+Consider both theoretical justifications and empirical indicators for model modification.
+```
+
+```{block, box.title = "Solution 8", box.icon = "fa-check", solution = FALSE}
+When facing poor model fit:
+1. Examine modification indices to identify potential sources of misfit
+2. Look for theoretical justification before making any modifications
+3. Consider correlated error terms if theoretically justified
+4. Evaluate whether certain items should be removed or reassigned to other factors
+5. Consider alternative factor structures that might better represent the data
+6. Document and justify all modifications made to the original model
+```
+
+```{block, opts.label = "exercise", box.title = "Exercise 9", box.body = list(fill = "white"), box.icon = "fa-star"}
+What is a modification index in the context of CFA, and how should it be used?
+```
+
+```{block, opts.label = "clues", box.icon = "fa-lightbulb"}
+Think about what modification indices quantify and their role in model respecification.
+```
+
+```{block, box.title = "Solution 9", box.icon = "fa-check", solution = FALSE}
+A modification index represents the expected decrease in the model chi-square value if a fixed or constrained parameter is freely estimated. It suggests which parameters, if freed, would improve model fit. Modification indices should be used cautiously and with theoretical justification, not merely to achieve better fit statistics.
+```
+
+```{block, opts.label = "exercise", box.title = "Exercise 10", box.body = list(fill = "white"), box.icon = "fa-star"}
+What is the relationship between sample size and model fit in CFA?
+```
+
+```{block, opts.label = "clues", box.icon = "fa-lightbulb"}
+Consider how different fit indices respond to sample size variation.
+```
+
+```{block, box.title = "Solution 10", box.icon = "fa-check", solution = FALSE}
+Sample size affects different fit indices in various ways:
+- Chi-square is sensitive to sample size and often rejects models with large samples even when the model approximates the data well
+- CFI and TLI are relatively unaffected by sample size
+- RMSEA tends to favor more complex models with smaller samples
+- Generally, CFA requires larger samples for stable parameter estimates and reliable fit statistics, with recommendations ranging from 5-20 observations per parameter
+```

@@ -1,0 +1,150 @@
+VERSION 1.1.0
+INPUT
+TITLE:
+ Latent Regression
+
+DATA:
+ FILE = mydata2.dat;
+VARIABLE:
+NAMES = ID Age
+        PTSD1 PTSD2 PTSD3
+        SUP1 SUP2 SUP3
+        BCOPE1 BCOPE2 BCOPE3 Reint;
+USEVARIABLES = PTSD1 PTSD2 PTSD3
+               SUP1 SUP2 SUP3
+               BCOPE1 BCOPE2 BCOPE3;
+MISSING = ALL (-999);
+ANALYSIS:
+ESTIMATOR = ML;
+OUTPUT:
+STAND
+modindices
+SAMP;
+MODEL:
+PTSD by PTSD1* PTSD2 PTSD3 ;
+PTSD@1;
+COPE by BCOPE1* BCOPE2 BCOPE3 ;
+COPE@1;
+SUP by SUP1* SUP2 SUP3 ;
+SUP@1;
+COPE ON PTSD SUP;
+PTSD WITH SUP;
+INPUT_END
+2
+2
+2
+2
+ML
+1
+GENERAL
+0
+9
+3
+0
+ptsd1 ptsd2 ptsd3 sup1 sup2 sup3 bcope1 bcope2 bcope3 ptsd cope sup
+2
+-1 -1 -1 -1 -1 -1 -1 -1 -1 0 1 0
+0
+3
+ptsd
+ptsd1 ptsd2 ptsd3
+cope
+bcope1 bcope2 bcope3
+sup
+sup1 sup2 sup3
+1 1 ptsd ptsd1 0.987 0.086
+1 1 ptsd ptsd2 0.640 0.070
+1 1 ptsd ptsd3 0.609 0.069
+1 1 cope bcope1 0.446 0.108
+1 1 cope bcope2 0.361 0.095
+1 1 cope bcope3 0.465 0.095
+1 1 sup sup1 2.195 0.155
+1 1 sup sup2 2.231 0.149
+1 1 sup sup3 1.967 0.164
+1 1 ptsd cope 1.234 0.311
+1 1 sup cope -0.043 0.157
+2 1 ptsd sup -0.258 0.089
+4 1 ptsd1 0.279 0.087
+4 1 ptsd2 0.369 0.058
+4 1 ptsd3 0.385 0.056
+4 1 sup1 0.841 0.182
+4 1 sup2 0.521 0.168
+4 1 sup3 1.761 0.243
+4 1 bcope1 1.283 0.186
+4 1 bcope2 0.977 0.138
+4 1 bcope3 0.667 0.121
+4 1 cope 1.000 0.000
+5 1 ptsd 1.000 0.000
+5 1 sup 1.000 0.000
+11 1 ptsd ptsd1 0.882 0.041
+11 1 ptsd ptsd2 0.725 0.052
+11 1 ptsd ptsd3 0.701 0.052
+11 1 cope bcope1 0.532 0.082
+11 1 cope bcope2 0.503 0.085
+11 1 cope bcope3 0.673 0.072
+11 1 sup sup1 0.923 0.019
+11 1 sup sup2 0.951 0.017
+11 1 sup sup3 0.829 0.029
+11 1 ptsd cope 0.772 0.081
+11 1 sup cope -0.027 0.098
+12 1 ptsd sup -0.258 0.089
+14 1 ptsd1 0.223 0.073
+14 1 ptsd2 0.474 0.076
+14 1 ptsd3 0.509 0.073
+14 1 sup1 0.149 0.035
+14 1 sup2 0.095 0.032
+14 1 sup3 0.313 0.049
+14 1 bcope1 0.717 0.088
+14 1 bcope2 0.747 0.085
+14 1 bcope3 0.547 0.097
+14 1 cope 0.392 0.118
+15 1 ptsd 1.000 0.0000000001000
+15 1 sup 1.000 0.0000000001000
+21 1 ptsd ptsd1 0.882 0.041
+21 1 ptsd ptsd2 0.725 0.052
+21 1 ptsd ptsd3 0.701 0.052
+21 1 cope bcope1 0.532 0.082
+21 1 cope bcope2 0.503 0.085
+21 1 cope bcope3 0.673 0.072
+21 1 sup sup1 0.923 0.019
+21 1 sup sup2 0.951 0.017
+21 1 sup sup3 0.829 0.029
+21 1 ptsd cope 0.772 0.081
+21 1 sup cope -0.027 0.098
+22 1 ptsd sup -0.258 0.089
+24 1 ptsd1 0.223 0.073
+24 1 ptsd2 0.474 0.076
+24 1 ptsd3 0.509 0.073
+24 1 sup1 0.149 0.035
+24 1 sup2 0.095 0.032
+24 1 sup3 0.313 0.049
+24 1 bcope1 0.717 0.088
+24 1 bcope2 0.747 0.085
+24 1 bcope3 0.547 0.097
+24 1 cope 0.392 0.118
+25 1 ptsd 1.000 0.0000000001000
+25 1 sup 1.000 0.0000000001000
+31 1 ptsd ptsd1 0.987 0.086
+31 1 ptsd ptsd2 0.640 0.070
+31 1 ptsd ptsd3 0.609 0.069
+31 1 cope bcope1 0.712 0.128
+31 1 cope bcope2 0.576 0.111
+31 1 cope bcope3 0.743 0.102
+31 1 sup sup1 2.195 0.155
+31 1 sup sup2 2.231 0.149
+31 1 sup sup3 1.967 0.164
+31 1 ptsd cope 0.772 0.081
+31 1 sup cope -0.027 0.098
+32 1 ptsd sup -0.258 0.089
+34 1 ptsd1 0.279 0.087
+34 1 ptsd2 0.369 0.058
+34 1 ptsd3 0.385 0.056
+34 1 sup1 0.841 0.182
+34 1 sup2 0.521 0.168
+34 1 sup3 1.761 0.243
+34 1 bcope1 1.283 0.186
+34 1 bcope2 0.977 0.138
+34 1 bcope3 0.667 0.121
+34 1 cope 0.392 0.118
+35 1 ptsd 1.000 0.0000000001000
+35 1 sup 1.000 0.0000000001000

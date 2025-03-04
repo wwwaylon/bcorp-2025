@@ -1,0 +1,551 @@
+Mplus VERSION 8.10
+MUTHEN & MUTHEN
+03/04/2025   1:50 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: Latent Mediation
+
+  DATA: FILE = mydata2.dat;
+
+  VARIABLE:
+  NAMES = ID Age PTSD1 PTSD2 PTSD3 SUP1 SUP2 SUP3 BCOPE1 BCOPE2 BCOPE3 Reint;
+
+  USEVARIABLES = X M Y;
+
+  MISSING = ALL (-999);
+
+  DEFINE:
+  X = (PTSD1 + PTSD2 + PTSD3) / 3 ;
+  M = (BCOPE1 + BCOPE2 + BCOPE3)/3 ;
+  Y = (SUP1 + SUP2 + SUP3)/3 ;
+
+  ANALYSIS:
+     TYPE = GENERAL;
+     ESTIMATOR = ML;
+     BOOTSTRAP = 10000;
+
+  MODEL:
+     Y ON X M;
+     M ON X;
+
+  ! Use model constraint to calculate indirect and total effects
+
+     MODEL INDIRECT:
+     Y IND X;
+
+  OUTPUT:
+     STAND CINT(bcbootstrap);
+
+
+
+
+*** WARNING
+  Data set contains cases with missing on x-variables.
+  These cases were not included in the analysis.
+  Number of cases with missing on x-variables:  3
+   1 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+Latent Mediation
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         140
+
+Number of dependent variables                                    2
+Number of independent variables                                  1
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   M           Y
+
+Observed independent variables
+   X
+
+
+Estimator                                                       ML
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Number of bootstrap draws
+    Requested                                                10000
+    Completed                                                10000
+
+Input data file(s)
+  mydata2.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             3
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              M             Y             X
+              ________      ________      ________
+ M              0.993
+ Y              0.986         0.993
+ X              0.993         0.993         1.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     M                     1.945       0.560       1.000   33.09%       1.000      1.333      2.000
+             139.000       0.815      -0.830       4.000    2.88%       2.000      3.000
+     Y                     3.204       0.526       1.000   33.09%       1.000      2.000      2.667
+             139.000       4.855      -1.234       7.000   10.07%       3.333      5.667
+     X                     0.519       1.591       0.000   58.57%       0.000      0.000      0.000
+             140.000       0.637       1.646       3.000    2.86%       0.333      1.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                        7
+
+Loglikelihood
+
+          H0 Value                        -465.226
+          H1 Value                        -465.226
+
+Information Criteria
+
+          Akaike (AIC)                     944.453
+          Bayesian (BIC)                   965.044
+          Sample-Size Adjusted BIC         942.897
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                              0.000
+          Degrees of Freedom                     0
+          P-Value                           0.0000
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.000
+          90 Percent C.I.                    0.000  0.000
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                1.000
+          TLI                                1.000
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                             49.600
+          Degrees of Freedom                     3
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.000
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ Y        ON
+    X                 -0.445      0.288     -1.545      0.122
+    M                 -0.162      0.233     -0.694      0.488
+
+ M        ON
+    X                  0.587      0.071      8.260      0.000
+
+ Intercepts
+    M                  1.638      0.077     21.276      0.000
+    Y                  3.751      0.438      8.568      0.000
+
+ Residual Variances
+    M                  0.595      0.069      8.604      0.000
+    Y                  4.653      0.362     12.854      0.000
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ Y        ON
+    X                 -0.161      0.099     -1.622      0.105
+    M                 -0.066      0.095     -0.695      0.487
+
+ M        ON
+    X                  0.519      0.060      8.633      0.000
+
+ Intercepts
+    M                  1.815      0.105     17.288      0.000
+    Y                  1.702      0.189      9.012      0.000
+
+ Residual Variances
+    M                  0.731      0.062     11.749      0.000
+    Y                  0.959      0.035     27.439      0.000
+
+
+STDY Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ Y        ON
+    X                 -0.202      0.130     -1.553      0.121
+    M                 -0.066      0.095     -0.695      0.487
+
+ M        ON
+    X                  0.650      0.074      8.730      0.000
+
+ Intercepts
+    M                  1.815      0.105     17.288      0.000
+    Y                  1.702      0.189      9.012      0.000
+
+ Residual Variances
+    M                  0.731      0.062     11.749      0.000
+    Y                  0.959      0.035     27.439      0.000
+
+
+STD Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ Y        ON
+    X                 -0.445      0.288     -1.545      0.122
+    M                 -0.162      0.233     -0.694      0.488
+
+ M        ON
+    X                  0.587      0.071      8.260      0.000
+
+ Intercepts
+    M                  1.638      0.077     21.276      0.000
+    Y                  3.751      0.438      8.568      0.000
+
+ Residual Variances
+    M                  0.595      0.069      8.604      0.000
+    Y                  4.653      0.362     12.854      0.000
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    M                  0.269      0.062      4.328      0.000
+    Y                  0.041      0.035      1.184      0.236
+
+
+TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Effects from X to Y
+
+  Total               -0.539      0.251     -2.150      0.032
+  Total indirect      -0.095      0.140     -0.675      0.500
+
+  Specific indirect 1
+    Y
+    M
+    X                 -0.095      0.140     -0.675      0.500
+
+  Direct
+    Y
+    X                 -0.445      0.288     -1.545      0.122
+
+
+
+STANDARDIZED TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Effects from X to Y
+
+  Total               -0.195      0.083     -2.357      0.018
+  Total indirect      -0.034      0.051     -0.678      0.498
+
+  Specific indirect 1
+    Y
+    M
+    X                 -0.034      0.051     -0.678      0.498
+
+  Direct
+    Y
+    X                 -0.161      0.099     -1.622      0.105
+
+
+
+STDY Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Effects from X to Y
+
+  Total               -0.245      0.113     -2.175      0.030
+  Total indirect      -0.043      0.064     -0.672      0.502
+
+  Specific indirect 1
+    Y
+    M
+    X                 -0.043      0.064     -0.672      0.502
+
+  Direct
+    Y
+    X                 -0.202      0.130     -1.553      0.121
+
+
+
+STD Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Effects from X to Y
+
+  Total               -0.539      0.251     -2.150      0.032
+  Total indirect      -0.095      0.140     -0.675      0.500
+
+  Specific indirect 1
+    Y
+    M
+    X                 -0.095      0.140     -0.675      0.500
+
+  Direct
+    Y
+    X                 -0.445      0.288     -1.545      0.122
+
+
+
+
+CONFIDENCE INTERVALS OF MODEL RESULTS
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+ Y        ON
+    X               -1.160      -0.980      -0.889      -0.445       0.056       0.156       0.340
+    M               -0.747      -0.601      -0.529      -0.162       0.236       0.307       0.472
+
+ M        ON
+    X                0.410       0.451       0.474       0.587       0.705       0.730       0.779
+
+ Intercepts
+    M                1.450       1.492       1.515       1.638       1.768       1.797       1.847
+    Y                2.607       2.881       3.018       3.751       4.449       4.585       4.862
+
+ Residual Variances
+    M                0.431       0.471       0.490       0.595       0.718       0.742       0.795
+    Y                3.830       4.038       4.151       4.653       5.341       5.452       5.659
+
+
+CONFIDENCE INTERVALS OF STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+ Y        ON
+    X               -0.391      -0.334      -0.305      -0.161       0.021       0.061       0.130
+    M               -0.304      -0.247      -0.218      -0.066       0.095       0.123       0.187
+
+ M        ON
+    X                0.353       0.395       0.415       0.519       0.614       0.632       0.665
+
+ Intercepts
+    M                1.564       1.617       1.647       1.815       1.987       2.027       2.105
+    Y                1.194       1.304       1.368       1.702       1.995       2.054       2.161
+
+ Residual Variances
+    M                0.558       0.600       0.623       0.731       0.827       0.844       0.875
+    Y                0.855       0.887       0.903       0.959       0.996       0.998       1.000
+
+
+STDY Standardization
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+ Y        ON
+    X               -0.520      -0.438      -0.401      -0.202       0.029       0.074       0.156
+    M               -0.304      -0.247      -0.218      -0.066       0.095       0.123       0.187
+
+ M        ON
+    X                0.460       0.505       0.529       0.650       0.772       0.798       0.851
+
+ Intercepts
+    M                1.564       1.617       1.647       1.815       1.987       2.027       2.105
+    Y                1.194       1.304       1.368       1.702       1.995       2.054       2.161
+
+ Residual Variances
+    M                0.558       0.600       0.623       0.731       0.827       0.844       0.875
+    Y                0.855       0.887       0.903       0.959       0.996       0.998       1.000
+
+
+STD Standardization
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+ Y        ON
+    X               -1.160      -0.980      -0.889      -0.445       0.056       0.156       0.340
+    M               -0.747      -0.601      -0.529      -0.162       0.236       0.307       0.472
+
+ M        ON
+    X                0.410       0.451       0.474       0.587       0.705       0.730       0.779
+
+ Intercepts
+    M                1.450       1.492       1.515       1.638       1.768       1.797       1.847
+    Y                2.607       2.881       3.018       3.751       4.449       4.585       4.862
+
+ Residual Variances
+    M                0.431       0.471       0.490       0.595       0.718       0.742       0.795
+    Y                3.830       4.038       4.151       4.653       5.341       5.452       5.659
+
+
+CONFIDENCE INTERVALS OF TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+Effects from X to Y
+
+  Total             -1.208      -1.028      -0.946      -0.539      -0.122      -0.051       0.090
+  Total indirect    -0.471      -0.371      -0.324      -0.095       0.135       0.178       0.272
+
+  Specific indirect 1
+    Y
+    M
+    X               -0.471      -0.371      -0.324      -0.095       0.135       0.178       0.272
+
+  Direct
+    Y
+    X               -1.160      -0.980      -0.889      -0.445       0.056       0.156       0.340
+
+
+
+CONFIDENCE INTERVALS OF STANDARDIZED TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+STDYX Standardization
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+Effects from X to Y
+
+  Total             -0.391      -0.344      -0.322      -0.195      -0.048      -0.020       0.036
+  Total indirect    -0.172      -0.134      -0.116      -0.034       0.048       0.065       0.099
+
+  Specific indirect 1
+    Y
+    M
+    X               -0.172      -0.134      -0.116      -0.034       0.048       0.065       0.099
+
+  Direct
+    Y
+    X               -0.391      -0.334      -0.305      -0.161       0.021       0.061       0.130
+
+
+
+STDY Standardization
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+Effects from X to Y
+
+  Total             -0.537      -0.461      -0.424      -0.245      -0.054      -0.022       0.044
+  Total indirect    -0.216      -0.169      -0.148      -0.043       0.062       0.082       0.125
+
+  Specific indirect 1
+    Y
+    M
+    X               -0.216      -0.169      -0.148      -0.043       0.062       0.082       0.125
+
+  Direct
+    Y
+    X               -0.520      -0.438      -0.401      -0.202       0.029       0.074       0.156
+
+
+
+STD Standardization
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+Effects from X to Y
+
+  Total             -1.208      -1.028      -0.946      -0.539      -0.122      -0.051       0.090
+  Total indirect    -0.471      -0.371      -0.324      -0.095       0.135       0.178       0.272
+
+  Specific indirect 1
+    Y
+    M
+    X               -0.471      -0.371      -0.324      -0.095       0.135       0.178       0.272
+
+  Direct
+    Y
+    X               -1.160      -0.980      -0.889      -0.445       0.056       0.156       0.340
+
+
+
+
+DIAGRAM INFORMATION
+
+  Use View Diagram under the Diagram menu in the Mplus Editor to view the diagram.
+  If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
+
+  Diagram output
+    c:\users\whowar\documents\github\bcorp-2025\exercises\5.1-manifest-mediation.dgm
+
+     Beginning Time:  13:50:30
+        Ending Time:  13:50:34
+       Elapsed Time:  00:00:04
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2023 Muthen & Muthen

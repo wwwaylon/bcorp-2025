@@ -1,0 +1,74 @@
+---
+title     : "Exercises: "
+subtitle  : "Latent variable modeling: A practical guide"
+---
+
+```{r child = "_setup.Rmd"}
+```
+
+```{block, opts.label = "exercise", box.title = "Exercise 1", box.body = list(fill = "white"), box.icon = "fa-star"}
+What is the primary goal of Confirmatory Factor Analysis (CFA)?
+```
+
+```{block, opts.label = "clues", box.icon = "fa-lightbulb"}
+Think about how CFA differs from Exploratory Factor Analysis (EFA) in terms of hypothesis testing.
+```
+
+```{block, box.title = "Solution 1", box.icon = "fa-check", solution = FALSE}
+The primary goal of CFA is to test whether a hypothesized factor structure fits the observed data.
+```
+
+
+```{block, opts.label = "exercise", box.title = "Exercise 2", box.body = list(fill = "white"), box.icon = "fa-star"}
+In CFA, what does a factor loading represent?
+```
+
+```{block, opts.label = "clues", box.icon = "fa-lightbulb"}
+Consider how strongly each observed variable is related to its underlying latent factor.
+```
+
+```{block, box.title = "Solution 2", box.icon = "fa-check", solution = FALSE}
+A factor loading represents the strength and direction of the relationship between an observed variable and its latent factor.
+```
+
+
+```{block, opts.label = "exercise", box.title = "Exercise 3", box.body = list(fill = "white"), box.icon = "fa-star"}
+What is the difference between standardized and unstandardized factor loadings in CFA?
+```
+
+```{block, opts.label = "clues", box.icon = "fa-lightbulb"}
+Think about the role of measurement units and comparability across variables.
+```
+
+```{block, box.title = "Solution 3", box.icon = "fa-check", solution = FALSE}
+Unstandardized loadings retain the original scale of measurement, while standardized loadings rescale values so that comparisons can be made across variables.
+```
+
+
+```{block, opts.label = "exercise", box.title = "Exercise 4", box.body = list(fill = "white"), box.icon = "fa-star"}
+Which fit indices are commonly used to evaluate CFA model fit?
+```
+
+```{block, opts.label = "clues", box.icon = "fa-lightbulb"}
+Look for indices that compare model-implied covariances with observed covariances.
+```
+
+```{block, box.title = "Solution 4", box.icon = "fa-check", solution = FALSE}
+Common fit indices include the Comparative Fit Index (CFI), Tucker-Lewis Index (TLI), Root Mean Square Error of Approximation (RMSEA), and Standardized Root Mean Square Residual (SRMR).
+```
+
+
+```{block, opts.label = "exercise", box.title = "Exercise 5", box.body = list(fill = "white"), box.icon = "fa-star"}
+How do you determine whether a CFA model has good fit?
+```
+
+```{block, opts.label = "clues", box.icon = "fa-lightbulb"}
+Consider commonly accepted thresholds for model fit indices.
+```
+
+```{block, box.title = "Solution 5", box.icon = "fa-check", solution = FALSE}
+A CFA model is considered to have good fit when CFI and TLI are above 0.90 (preferably >0.95), RMSEA is below 0.06, and SRMR is below 0.08.
+
+
+
+

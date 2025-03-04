@@ -1,0 +1,314 @@
+Mplus VERSION 8.10
+MUTHEN & MUTHEN
+03/04/2025   1:03 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: Manifest Correlations
+
+  DATA: FILE = mydata2.dat;
+
+  VARIABLE:
+  NAMES = ID Age PTSD1 PTSD2 PTSD3 SUP1 SUP2 SUP3 BCOPE1 BCOPE2 BCOPE3 Reint;
+  USEVARIABLES = PTSD SUP COPE;
+
+  MISSING = ALL (-999);
+
+  DEFINE:
+  PTSD = PTSD1 + PTSD2 + PTSD3 / 3;
+  COPE = BCOPE1 + BCOPE2 + BCOPE3 / 3;
+  SUP = SUP1 + SUP2 + SUP3 / 3;
+
+  ANALYSIS:
+  ESTIMATOR = ML;
+
+  MODEL:
+  PTSD WITH COPE SUP;
+  COPE WITH SUP;
+
+  OUTPUT:
+  STAND
+  SAMP;
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+Manifest Correlations
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         143
+
+Number of dependent variables                                    3
+Number of independent variables                                  0
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   PTSD        SUP         COPE
+
+
+Estimator                                                       ML
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+
+Input data file(s)
+  mydata2.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             4
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              PTSD          SUP           COPE
+              ________      ________      ________
+ PTSD           0.979
+ SUP            0.972         0.993
+ COPE           0.972         0.986         0.993
+
+
+SAMPLE STATISTICS
+
+
+     ESTIMATED SAMPLE STATISTICS
+
+
+           Means
+              PTSD          SUP           COPE
+              ________      ________      ________
+                1.317         7.397         4.777
+
+
+           Covariances
+              PTSD          SUP           COPE
+              ________      ________      ________
+ PTSD           3.815
+ SUP           -1.971        27.558
+ COPE           2.123        -1.089         4.988
+
+
+           Correlations
+              PTSD          SUP           COPE
+              ________      ________      ________
+ PTSD           1.000
+ SUP           -0.192         1.000
+ COPE           0.487        -0.093         1.000
+
+
+     MAXIMUM LOG-LIKELIHOOD VALUE FOR THE UNRESTRICTED (H1) MODEL IS -1023.475
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     PTSD                  1.310       1.427       0.000   58.57%       0.000      0.000      0.000
+             140.000       3.833       0.976       7.000    2.86%       1.000      3.000
+     SUP                   7.392       0.573       2.333   33.80%       2.333      4.000      5.333
+             142.000      27.562      -1.234      16.333   10.56%       7.333     14.000
+     COPE                  4.782       0.371       2.333   32.39%       2.333      3.333      5.333
+             142.000       4.992      -1.135       9.333    2.82%       5.333      7.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                        9
+
+Loglikelihood
+
+          H0 Value                       -1023.475
+          H1 Value                       -1023.475
+
+Information Criteria
+
+          Akaike (AIC)                    2064.950
+          Bayesian (BIC)                  2091.616
+          Sample-Size Adjusted BIC        2063.138
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                              0.000
+          Degrees of Freedom                     0
+          P-Value                           0.0000
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.000
+          90 Percent C.I.                    0.000  0.000
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                1.000
+          TLI                                1.000
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                             43.667
+          Degrees of Freedom                     3
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.000
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PTSD     WITH
+    COPE               2.124      0.407      5.222      0.000
+    SUP               -1.971      0.885     -2.227      0.026
+
+ COPE     WITH
+    SUP               -1.089      0.991     -1.099      0.272
+
+ Means
+    PTSD               1.317      0.165      7.999      0.000
+    SUP                7.397      0.441     16.792      0.000
+    COPE               4.777      0.187     25.506      0.000
+
+ Variances
+    PTSD               3.815      0.454      8.401      0.000
+    SUP               27.560      3.270      8.427      0.000
+    COPE               4.988      0.591      8.433      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.332E-02
+       (ratio of smallest to largest eigenvalue)
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PTSD     WITH
+    COPE               0.487      0.064      7.592      0.000
+    SUP               -0.192      0.082     -2.351      0.019
+
+ COPE     WITH
+    SUP               -0.093      0.083     -1.114      0.265
+
+ Means
+    PTSD               0.674      0.093      7.234      0.000
+    SUP                1.409      0.118     11.903      0.000
+    COPE               2.139      0.152     14.052      0.000
+
+ Variances
+    PTSD               1.000      0.000    999.000    999.000
+    SUP                1.000      0.000    999.000    999.000
+    COPE               1.000      0.000    999.000    999.000
+
+
+STDY Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PTSD     WITH
+    COPE               0.487      0.064      7.592      0.000
+    SUP               -0.192      0.082     -2.351      0.019
+
+ COPE     WITH
+    SUP               -0.093      0.083     -1.114      0.265
+
+ Means
+    PTSD               0.674      0.093      7.234      0.000
+    SUP                1.409      0.118     11.903      0.000
+    COPE               2.139      0.152     14.052      0.000
+
+ Variances
+    PTSD               1.000      0.000    999.000    999.000
+    SUP                1.000      0.000    999.000    999.000
+    COPE               1.000      0.000    999.000    999.000
+
+
+STD Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PTSD     WITH
+    COPE               2.124      0.407      5.222      0.000
+    SUP               -1.971      0.885     -2.227      0.026
+
+ COPE     WITH
+    SUP               -1.089      0.991     -1.099      0.272
+
+ Means
+    PTSD               1.317      0.165      7.999      0.000
+    SUP                7.397      0.441     16.792      0.000
+    COPE               4.777      0.187     25.506      0.000
+
+ Variances
+    PTSD               3.815      0.454      8.401      0.000
+    SUP               27.560      3.270      8.427      0.000
+    COPE               4.988      0.591      8.433      0.000
+
+
+R-SQUARE
+
+
+DIAGRAM INFORMATION
+
+  Use View Diagram under the Diagram menu in the Mplus Editor to view the diagram.
+  If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
+
+  Diagram output
+    c:\users\whowar\documents\github\bcorp-2025\exercises\2.1-manifest-correlations.dgm
+
+     Beginning Time:  13:03:09
+        Ending Time:  13:03:10
+       Elapsed Time:  00:00:01
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2023 Muthen & Muthen

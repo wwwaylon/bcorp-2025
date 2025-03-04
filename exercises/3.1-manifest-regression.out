@@ -1,0 +1,358 @@
+Mplus VERSION 8.10
+MUTHEN & MUTHEN
+03/04/2025   1:03 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: Manifest Multiple Regression
+
+  DATA: FILE = mydata2.dat;
+
+  VARIABLE:
+  NAMES = ID Age PTSD1 PTSD2 PTSD3 SUP1 SUP2 SUP3 BCOPE1 BCOPE2 BCOPE3 Reint;
+
+  MISSING = ALL (-999);
+
+  USEVARIABLES = X M Y;
+
+  MISSING = ALL (-999);
+
+  DEFINE:
+  M = (PTSD1 + PTSD2 + PTSD3) / 3 ;
+  X = (BCOPE1 + BCOPE2 + BCOPE3)/3 ;
+  Y = (SUP1 + SUP2 + SUP3)/3 ;
+
+  ANALYSIS:
+     ESTIMATOR = ML;
+
+  MODEL:
+
+  X ON M Y;
+  M WITH Y;
+
+  OUTPUT:
+  STAND
+  modindices
+  SAMP;
+
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+Manifest Multiple Regression
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         143
+
+Number of dependent variables                                    1
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   X
+
+Observed independent variables
+   M           Y
+
+
+Estimator                                                       ML
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+
+Input data file(s)
+  mydata2.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             4
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              X             M             Y
+              ________      ________      ________
+ X              0.993
+ M              0.972         0.979
+ Y              0.986         0.972         0.993
+
+
+SAMPLE STATISTICS
+
+
+     ESTIMATED SAMPLE STATISTICS
+
+
+           Means
+              X             M             Y
+              ________      ________      ________
+                1.953         0.524         3.202
+
+
+           Covariances
+              X             M             Y
+              ________      ________      ________
+ X              0.803
+ M              0.369         0.635
+ Y             -0.298        -0.347         4.921
+
+
+           Correlations
+              X             M             Y
+              ________      ________      ________
+ X              1.000
+ M              0.516         1.000
+ Y             -0.150        -0.196         1.000
+
+
+     MAXIMUM LOG-LIKELIHOOD VALUE FOR THE UNRESTRICTED (H1) MODEL IS -642.807
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     X                     1.955       0.530       1.000   32.39%       1.000      1.333      2.000
+             142.000       0.803      -0.836       4.000    2.82%       2.000      3.000
+     M                     0.519       1.591       0.000   58.57%       0.000      0.000      0.000
+             140.000       0.637       1.646       3.000    2.86%       0.333      1.000
+     Y                     3.200       0.532       1.000   33.80%       1.000      1.667      2.667
+             142.000       4.922      -1.241       7.000   10.56%       3.333      6.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                        9
+
+Loglikelihood
+
+          H0 Value                        -642.807
+          H1 Value                        -642.807
+
+Information Criteria
+
+          Akaike (AIC)                    1303.615
+          Bayesian (BIC)                  1330.281
+          Sample-Size Adjusted BIC        1301.803
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                              0.000
+          Degrees of Freedom                     0
+          P-Value                           0.0000
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.000
+          90 Percent C.I.                    0.000  0.000
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                1.000
+          TLI                                1.000
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                             44.247
+          Degrees of Freedom                     2
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.000
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ X        ON
+    M                  0.569      0.082      6.906      0.000
+    Y                 -0.020      0.030     -0.688      0.491
+
+ M        WITH
+    Y                 -0.347      0.153     -2.271      0.023
+
+ Means
+    M                  0.524      0.067      7.802      0.000
+    Y                  3.202      0.186     17.201      0.000
+
+ Intercepts
+    X                  1.720      0.129     13.351      0.000
+
+ Variances
+    M                  0.635      0.076      8.393      0.000
+    Y                  4.921      0.584      8.427      0.000
+
+ Residual Variances
+    X                  0.587      0.070      8.409      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.443E-02
+       (ratio of smallest to largest eigenvalue)
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ X        ON
+    M                  0.506      0.064      7.958      0.000
+    Y                 -0.051      0.073     -0.689      0.491
+
+ M        WITH
+    Y                 -0.196      0.082     -2.405      0.016
+
+ Means
+    M                  0.658      0.093      7.092      0.000
+    Y                  1.443      0.120     12.047      0.000
+
+ Intercepts
+    X                  1.920      0.197      9.756      0.000
+
+ Variances
+    M                  1.000      0.000    999.000    999.000
+    Y                  1.000      0.000    999.000    999.000
+
+ Residual Variances
+    X                  0.731      0.064     11.462      0.000
+
+
+STDY Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ X        ON
+    M                  0.506      0.064      7.958      0.000
+    Y                 -0.051      0.073     -0.689      0.491
+
+ M        WITH
+    Y                 -0.196      0.082     -2.405      0.016
+
+ Means
+    M                  0.658      0.093      7.092      0.000
+    Y                  1.443      0.120     12.047      0.000
+
+ Intercepts
+    X                  1.920      0.197      9.756      0.000
+
+ Variances
+    M                  1.000      0.000    999.000    999.000
+    Y                  1.000      0.000    999.000    999.000
+
+ Residual Variances
+    X                  0.731      0.064     11.462      0.000
+
+
+STD Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ X        ON
+    M                  0.569      0.082      6.906      0.000
+    Y                 -0.020      0.030     -0.688      0.491
+
+ M        WITH
+    Y                 -0.347      0.153     -2.271      0.023
+
+ Means
+    M                  0.524      0.067      7.802      0.000
+    Y                  3.202      0.186     17.201      0.000
+
+ Intercepts
+    X                  1.720      0.129     13.351      0.000
+
+ Variances
+    M                  0.635      0.076      8.393      0.000
+    Y                  4.921      0.584      8.427      0.000
+
+ Residual Variances
+    X                  0.587      0.070      8.409      0.000
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    X                  0.269      0.064      4.219      0.000
+
+
+MODEL MODIFICATION INDICES
+
+NOTE:  Modification indices for direct effects of observed dependent variables
+regressed on covariates may not be included.  To include these, request
+MODINDICES (ALL).
+
+Minimum M.I. value for printing the modification index    10.000
+
+                                   M.I.     E.P.C.  Std E.P.C.  StdYX E.P.C.
+
+No modification indices above the minimum value.
+
+
+
+DIAGRAM INFORMATION
+
+  Use View Diagram under the Diagram menu in the Mplus Editor to view the diagram.
+  If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
+
+  Diagram output
+    c:\users\whowar\documents\github\bcorp-2025\exercises\3.1-manifest-regression.dgm
+
+     Beginning Time:  13:03:21
+        Ending Time:  13:03:21
+       Elapsed Time:  00:00:00
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2023 Muthen & Muthen

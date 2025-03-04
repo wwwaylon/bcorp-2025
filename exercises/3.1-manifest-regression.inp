@@ -1,0 +1,31 @@
+TITLE: Manifest Multiple Regression  
+
+DATA: FILE = mydata2.dat;
+
+VARIABLE: 
+NAMES = ID Age PTSD1 PTSD2 PTSD3 SUP1 SUP2 SUP3 BCOPE1 BCOPE2 BCOPE3 Reint; 
+
+MISSING = ALL (-999); 
+
+USEVARIABLES = X M Y;
+
+MISSING = ALL (-999); 
+
+DEFINE:
+M = (PTSD1 + PTSD2 + PTSD3) / 3 ;
+X = (BCOPE1 + BCOPE2 + BCOPE3)/3 ;
+Y = (SUP1 + SUP2 + SUP3)/3 ;
+
+ANALYSIS:
+   ESTIMATOR = ML;
+
+MODEL:
+
+X ON M Y;
+M WITH Y;
+
+OUTPUT:
+STAND 
+modindices
+SAMP;
+

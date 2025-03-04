@@ -1,0 +1,39 @@
+TITLE: Latent Mediation
+
+DATA: FILE = mydata2.dat;
+
+VARIABLE: 
+NAMES = ID Age PTSD1 PTSD2 PTSD3 SUP1 SUP2 SUP3 BCOPE1 BCOPE2 BCOPE3 Reint; 
+
+USEVARIABLES = PTSD1 PTSD2 PTSD3 
+               SUP1 SUP2 SUP3 
+               BCOPE1 BCOPE2 BCOPE3;
+
+MISSING = ALL (-999); 
+
+ANALYSIS:
+   TYPE = GENERAL;
+   ESTIMATOR = ML;
+   BOOTSTRAP = 10000;
+
+MODEL:
+X by PTSD1* PTSD2 PTSD3 ;
+X@1;
+
+M by BCOPE1* BCOPE2 BCOPE3 ;
+M@1;
+
+Y by SUP1* SUP2 SUP3 ;
+Y@1;
+
+   Y ON X M;
+   M ON X;
+
+! Use model constraint to calculate indirect and total effects
+
+   MODEL INDIRECT:
+   Y IND X;
+
+OUTPUT:
+   STAND CINT(bcbootstrap);
+

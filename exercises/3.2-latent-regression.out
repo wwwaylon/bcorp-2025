@@ -1,0 +1,553 @@
+Mplus VERSION 8.10
+MUTHEN & MUTHEN
+03/04/2025   1:03 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: Latent Regression
+
+  DATA: FILE = mydata2.dat;
+
+  VARIABLE:
+  NAMES = ID Age
+          PTSD1 PTSD2 PTSD3
+          SUP1 SUP2 SUP3
+          BCOPE1 BCOPE2 BCOPE3 Reint;
+
+  USEVARIABLES = PTSD1 PTSD2 PTSD3
+                 SUP1 SUP2 SUP3
+                 BCOPE1 BCOPE2 BCOPE3;
+
+  MISSING = ALL (-999);
+
+  ANALYSIS:
+  ESTIMATOR = ML;
+
+  MODEL:
+  PTSD by PTSD1* PTSD2 PTSD3 ;
+  PTSD@1;
+
+  COPE by BCOPE1* BCOPE2 BCOPE3 ;
+  COPE@1;
+
+  SUP by SUP1* SUP2 SUP3 ;
+  SUP@1;
+
+  COPE ON PTSD SUP;
+
+  PTSD WITH SUP;
+
+  OUTPUT:
+  STAND
+  modindices
+  SAMP;
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+Latent Regression
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         143
+
+Number of dependent variables                                    9
+Number of independent variables                                  0
+Number of continuous latent variables                            3
+
+Observed dependent variables
+
+  Continuous
+   PTSD1       PTSD2       PTSD3       SUP1        SUP2        SUP3
+   BCOPE1      BCOPE2      BCOPE3
+
+Continuous latent variables
+   PTSD        COPE        SUP
+
+
+Estimator                                                       ML
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+
+Input data file(s)
+  mydata2.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             4
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              PTSD1         PTSD2         PTSD3         SUP1          SUP2
+              ________      ________      ________      ________      ________
+ PTSD1          0.979
+ PTSD2          0.979         1.000
+ PTSD3          0.979         1.000         1.000
+ SUP1           0.979         1.000         1.000         1.000
+ SUP2           0.972         0.993         0.993         0.993         0.993
+ SUP3           0.979         1.000         1.000         1.000         0.993
+ BCOPE1         0.972         0.993         0.993         0.993         0.986
+ BCOPE2         0.972         0.993         0.993         0.993         0.986
+ BCOPE3         0.972         0.993         0.993         0.993         0.986
+
+
+           Covariance Coverage
+              SUP3          BCOPE1        BCOPE2        BCOPE3
+              ________      ________      ________      ________
+ SUP3           1.000
+ BCOPE1         0.993         0.993
+ BCOPE2         0.993         0.993         0.993
+ BCOPE3         0.993         0.993         0.993         0.993
+
+
+SAMPLE STATISTICS
+
+
+     ESTIMATED SAMPLE STATISTICS
+
+
+           Means
+              PTSD1         PTSD2         PTSD3         SUP1          SUP2
+              ________      ________      ________      ________      ________
+                0.765         0.448         0.392         3.287         2.991
+
+
+           Means
+              SUP3          BCOPE1        BCOPE2        BCOPE3
+              ________      ________      ________      ________
+                3.322         2.404         1.828         1.623
+
+
+           Covariances
+              PTSD1         PTSD2         PTSD3         SUP1          SUP2
+              ________      ________      ________      ________      ________
+ PTSD1          1.250
+ PTSD2          0.615         0.779
+ PTSD3          0.602         0.419         0.756
+ SUP1          -0.534        -0.233        -0.315         5.659
+ SUP2          -0.699        -0.206        -0.297         4.899         5.497
+ SUP3          -0.701        -0.228        -0.294         4.327         4.377
+ BCOPE1         0.601         0.330         0.247        -0.049        -0.362
+ BCOPE2         0.384         0.301         0.172         0.062        -0.166
+ BCOPE3         0.600         0.421         0.351        -0.430        -0.527
+
+
+           Covariances
+              SUP3          BCOPE1        BCOPE2        BCOPE3
+              ________      ________      ________      ________
+ SUP3           5.631
+ BCOPE1        -0.344         1.791
+ BCOPE2        -0.167         0.590         1.309
+ BCOPE3        -0.717         0.442         0.423         1.220
+
+
+           Correlations
+              PTSD1         PTSD2         PTSD3         SUP1          SUP2
+              ________      ________      ________      ________      ________
+ PTSD1          1.000
+ PTSD2          0.624         1.000
+ PTSD3          0.619         0.546         1.000
+ SUP1          -0.201        -0.111        -0.152         1.000
+ SUP2          -0.267        -0.100        -0.146         0.878         1.000
+ SUP3          -0.264        -0.109        -0.142         0.767         0.787
+ BCOPE1         0.402         0.279         0.213        -0.015        -0.115
+ BCOPE2         0.300         0.298         0.173         0.023        -0.062
+ BCOPE3         0.486         0.432         0.365        -0.164        -0.204
+
+
+           Correlations
+              SUP3          BCOPE1        BCOPE2        BCOPE3
+              ________      ________      ________      ________
+ SUP3           1.000
+ BCOPE1        -0.108         1.000
+ BCOPE2        -0.061         0.385         1.000
+ BCOPE3        -0.274         0.299         0.335         1.000
+
+
+     MAXIMUM LOG-LIKELIHOOD VALUE FOR THE UNRESTRICTED (H1) MODEL IS -1916.089
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     PTSD1                 0.750       1.145       0.000   62.14%       0.000      0.000      0.000
+             140.000       1.216      -0.249       3.000   14.29%       0.000      2.000
+     PTSD2                 0.448       1.869       0.000   75.52%       0.000      0.000      0.000
+             143.000       0.779       2.208       3.000    6.29%       0.000      1.000
+     PTSD3                 0.392       2.219       0.000   79.02%       0.000      0.000      0.000
+             143.000       0.756       3.620       3.000    7.69%       0.000      1.000
+     SUP1                  3.287       0.443       1.000   41.26%       1.000      1.000      2.000
+             143.000       5.659      -1.429       7.000   17.48%       4.000      6.000
+     SUP2                  2.993       0.694       1.000   46.48%       1.000      1.000      2.000
+             142.000       5.528      -1.188       7.000   15.49%       3.000      6.000
+     SUP3                  3.322       0.365       1.000   42.66%       1.000      1.000      3.000
+             143.000       5.631      -1.500       7.000   15.38%       4.000      6.000
+     BCOPE1                2.408       0.125       1.000   41.55%       1.000      1.000      2.000
+             142.000       1.791      -1.767       4.000   35.92%       3.000      4.000
+     BCOPE2                1.831       0.926       1.000   60.56%       1.000      1.000      1.000
+             142.000       1.309      -0.769       4.000   14.79%       1.000      3.000
+     BCOPE3                1.627       1.403       1.000   72.54%       1.000      1.000      1.000
+             142.000       1.220       0.247       4.000   14.08%       1.000      3.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       30
+
+Loglikelihood
+
+          H0 Value                       -1934.084
+          H1 Value                       -1916.089
+
+Information Criteria
+
+          Akaike (AIC)                    3928.169
+          Bayesian (BIC)                  4017.054
+          Sample-Size Adjusted BIC        3922.129
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                             35.991
+          Degrees of Freedom                    24
+          P-Value                           0.0550
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.059
+          90 Percent C.I.                    0.000  0.097
+          Probability RMSEA <= .05           0.326
+
+CFI/TLI
+
+          CFI                                0.980
+          TLI                                0.970
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                            638.924
+          Degrees of Freedom                    36
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.047
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PTSD     BY
+    PTSD1              0.987      0.086     11.511      0.000
+    PTSD2              0.640      0.070      9.116      0.000
+    PTSD3              0.609      0.069      8.892      0.000
+
+ COPE     BY
+    BCOPE1             0.446      0.108      4.132      0.000
+    BCOPE2             0.361      0.095      3.811      0.000
+    BCOPE3             0.465      0.095      4.906      0.000
+
+ SUP      BY
+    SUP1               2.195      0.155     14.191      0.000
+    SUP2               2.231      0.149     14.951      0.000
+    SUP3               1.967      0.164     12.001      0.000
+
+ COPE     ON
+    PTSD               1.234      0.311      3.965      0.000
+    SUP               -0.043      0.157     -0.274      0.784
+
+ PTSD     WITH
+    SUP               -0.258      0.089     -2.910      0.004
+
+ Intercepts
+    PTSD1              0.768      0.094      8.163      0.000
+    PTSD2              0.448      0.074      6.065      0.000
+    PTSD3              0.392      0.073      5.387      0.000
+    SUP1               3.287      0.199     16.522      0.000
+    SUP2               2.991      0.196     15.242      0.000
+    SUP3               3.322      0.198     16.739      0.000
+    BCOPE1             2.406      0.112     21.437      0.000
+    BCOPE2             1.829      0.096     19.056      0.000
+    BCOPE3             1.624      0.093     17.541      0.000
+
+ Variances
+    PTSD               1.000      0.000    999.000    999.000
+    SUP                1.000      0.000    999.000    999.000
+
+ Residual Variances
+    PTSD1              0.279      0.087      3.219      0.001
+    PTSD2              0.369      0.058      6.335      0.000
+    PTSD3              0.385      0.056      6.884      0.000
+    SUP1               0.841      0.182      4.627      0.000
+    SUP2               0.521      0.168      3.097      0.002
+    SUP3               1.761      0.243      7.232      0.000
+    BCOPE1             1.283      0.186      6.885      0.000
+    BCOPE2             0.977      0.138      7.078      0.000
+    BCOPE3             0.667      0.121      5.505      0.000
+    COPE               1.000      0.000    999.000    999.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.169E-01
+       (ratio of smallest to largest eigenvalue)
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PTSD     BY
+    PTSD1              0.882      0.041     21.429      0.000
+    PTSD2              0.725      0.052     13.842      0.000
+    PTSD3              0.701      0.052     13.370      0.000
+
+ COPE     BY
+    BCOPE1             0.532      0.082      6.457      0.000
+    BCOPE2             0.503      0.085      5.955      0.000
+    BCOPE3             0.673      0.072      9.316      0.000
+
+ SUP      BY
+    SUP1               0.923      0.019     48.212      0.000
+    SUP2               0.951      0.017     56.231      0.000
+    SUP3               0.829      0.029     28.168      0.000
+
+ COPE     ON
+    PTSD               0.772      0.081      9.499      0.000
+    SUP               -0.027      0.098     -0.274      0.784
+
+ PTSD     WITH
+    SUP               -0.258      0.089     -2.910      0.004
+
+ Intercepts
+    PTSD1              0.686      0.093      7.352      0.000
+    PTSD2              0.507      0.089      5.709      0.000
+    PTSD3              0.450      0.088      5.133      0.000
+    SUP1               1.382      0.117     11.818      0.000
+    SUP2               1.275      0.113     11.320      0.000
+    SUP3               1.400      0.118     11.897      0.000
+    BCOPE1             1.798      0.136     13.236      0.000
+    BCOPE2             1.598      0.127     12.612      0.000
+    BCOPE3             1.471      0.121     12.140      0.000
+
+ Variances
+    PTSD               1.000      0.000    999.000    999.000
+    SUP                1.000      0.000    999.000    999.000
+
+ Residual Variances
+    PTSD1              0.223      0.073      3.071      0.002
+    PTSD2              0.474      0.076      6.246      0.000
+    PTSD3              0.509      0.073      6.924      0.000
+    SUP1               0.149      0.035      4.206      0.000
+    SUP2               0.095      0.032      2.942      0.003
+    SUP3               0.313      0.049      6.408      0.000
+    BCOPE1             0.717      0.088      8.177      0.000
+    BCOPE2             0.747      0.085      8.773      0.000
+    BCOPE3             0.547      0.097      5.621      0.000
+    COPE               0.392      0.118      3.315      0.001
+
+
+STDY Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PTSD     BY
+    PTSD1              0.882      0.041     21.429      0.000
+    PTSD2              0.725      0.052     13.842      0.000
+    PTSD3              0.701      0.052     13.370      0.000
+
+ COPE     BY
+    BCOPE1             0.532      0.082      6.457      0.000
+    BCOPE2             0.503      0.085      5.955      0.000
+    BCOPE3             0.673      0.072      9.316      0.000
+
+ SUP      BY
+    SUP1               0.923      0.019     48.212      0.000
+    SUP2               0.951      0.017     56.231      0.000
+    SUP3               0.829      0.029     28.168      0.000
+
+ COPE     ON
+    PTSD               0.772      0.081      9.499      0.000
+    SUP               -0.027      0.098     -0.274      0.784
+
+ PTSD     WITH
+    SUP               -0.258      0.089     -2.910      0.004
+
+ Intercepts
+    PTSD1              0.686      0.093      7.352      0.000
+    PTSD2              0.507      0.089      5.709      0.000
+    PTSD3              0.450      0.088      5.133      0.000
+    SUP1               1.382      0.117     11.818      0.000
+    SUP2               1.275      0.113     11.320      0.000
+    SUP3               1.400      0.118     11.897      0.000
+    BCOPE1             1.798      0.136     13.236      0.000
+    BCOPE2             1.598      0.127     12.612      0.000
+    BCOPE3             1.471      0.121     12.140      0.000
+
+ Variances
+    PTSD               1.000      0.000    999.000    999.000
+    SUP                1.000      0.000    999.000    999.000
+
+ Residual Variances
+    PTSD1              0.223      0.073      3.071      0.002
+    PTSD2              0.474      0.076      6.246      0.000
+    PTSD3              0.509      0.073      6.924      0.000
+    SUP1               0.149      0.035      4.206      0.000
+    SUP2               0.095      0.032      2.942      0.003
+    SUP3               0.313      0.049      6.408      0.000
+    BCOPE1             0.717      0.088      8.177      0.000
+    BCOPE2             0.747      0.085      8.773      0.000
+    BCOPE3             0.547      0.097      5.621      0.000
+    COPE               0.392      0.118      3.315      0.001
+
+
+STD Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PTSD     BY
+    PTSD1              0.987      0.086     11.511      0.000
+    PTSD2              0.640      0.070      9.116      0.000
+    PTSD3              0.609      0.069      8.892      0.000
+
+ COPE     BY
+    BCOPE1             0.712      0.128      5.545      0.000
+    BCOPE2             0.576      0.111      5.202      0.000
+    BCOPE3             0.743      0.102      7.279      0.000
+
+ SUP      BY
+    SUP1               2.195      0.155     14.191      0.000
+    SUP2               2.231      0.149     14.951      0.000
+    SUP3               1.967      0.164     12.001      0.000
+
+ COPE     ON
+    PTSD               0.772      0.081      9.499      0.000
+    SUP               -0.027      0.098     -0.274      0.784
+
+ PTSD     WITH
+    SUP               -0.258      0.089     -2.910      0.004
+
+ Intercepts
+    PTSD1              0.768      0.094      8.163      0.000
+    PTSD2              0.448      0.074      6.065      0.000
+    PTSD3              0.392      0.073      5.387      0.000
+    SUP1               3.287      0.199     16.522      0.000
+    SUP2               2.991      0.196     15.242      0.000
+    SUP3               3.322      0.198     16.739      0.000
+    BCOPE1             2.406      0.112     21.437      0.000
+    BCOPE2             1.829      0.096     19.056      0.000
+    BCOPE3             1.624      0.093     17.541      0.000
+
+ Variances
+    PTSD               1.000      0.000    999.000    999.000
+    SUP                1.000      0.000    999.000    999.000
+
+ Residual Variances
+    PTSD1              0.279      0.087      3.219      0.001
+    PTSD2              0.369      0.058      6.335      0.000
+    PTSD3              0.385      0.056      6.884      0.000
+    SUP1               0.841      0.182      4.627      0.000
+    SUP2               0.521      0.168      3.097      0.002
+    SUP3               1.761      0.243      7.232      0.000
+    BCOPE1             1.283      0.186      6.885      0.000
+    BCOPE2             0.977      0.138      7.078      0.000
+    BCOPE3             0.667      0.121      5.505      0.000
+    COPE               0.392      0.118      3.315      0.001
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    PTSD1              0.777      0.073     10.715      0.000
+    PTSD2              0.526      0.076      6.921      0.000
+    PTSD3              0.491      0.073      6.685      0.000
+    SUP1               0.851      0.035     24.106      0.000
+    SUP2               0.905      0.032     28.116      0.000
+    SUP3               0.687      0.049     14.084      0.000
+    BCOPE1             0.283      0.088      3.229      0.001
+    BCOPE2             0.253      0.085      2.978      0.003
+    BCOPE3             0.453      0.097      4.658      0.000
+
+     Latent                                         Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    COPE               0.608      0.118      5.144      0.000
+
+
+MODEL MODIFICATION INDICES
+
+NOTE:  Modification indices for direct effects of observed dependent variables
+regressed on covariates may not be included.  To include these, request
+MODINDICES (ALL).
+
+Minimum M.I. value for printing the modification index    10.000
+
+                                   M.I.     E.P.C.  Std E.P.C.  StdYX E.P.C.
+
+No modification indices above the minimum value.
+
+
+
+DIAGRAM INFORMATION
+
+  Use View Diagram under the Diagram menu in the Mplus Editor to view the diagram.
+  If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
+
+  Diagram output
+    c:\users\whowar\documents\github\bcorp-2025\exercises\3.2-latent-regression.dgm
+
+     Beginning Time:  13:03:25
+        Ending Time:  13:03:25
+       Elapsed Time:  00:00:00
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2023 Muthen & Muthen
