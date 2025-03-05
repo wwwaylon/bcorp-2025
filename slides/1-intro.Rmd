@@ -134,7 +134,7 @@ https://github.com/wwwaylon/bcorp-2025
 
 ## Workshop schedule
 
-.center[**Wednesday, November 20th, 2024**]
+.center[**Wednesday, March 5th, 2025**]
 
 ```{r schedule Wed, echo = F}
 schedule <- data.frame(
@@ -206,7 +206,7 @@ class: middle, left
 ]
 
 .pull-right[
-<span style="font-size: 90%;">.highlight[Using the scoring procedure]: 
+<span style="font-size: 90%;">.highlight[Using the scoring procedure:] 
 <br>
 `r emo::ji("see_no_evil")` No measurement error<br> 
 `r emo::ji("hear_no_evil")` Uniform items<br> 
@@ -220,7 +220,9 @@ class: middle, center
 
 ## Path Diagram
 
-<img class="rectangle" src="img/cfa1.png" width="800px"/>
+<img class="rectangle" src="img/cfa1.png" width="750px"/>
+
+<small><small>Illustration adapted from [Little, T. D. (2024)](https://www.guilford.com/books/Longitudinal-Structural-Equation-Modeling/Todd-Little/9781462553143).</small></small>
 
 ---
 
@@ -356,7 +358,7 @@ Estimated Parameters: **7**<br>
 Observed Information: **6**
 </span>
 
-<span style="font-size: 80%;"> .highlight[Model Identification]:<br> 
+<span style="font-size: 80%;"> .highlight[Model Identification:]<br> 
 `r emo::ji("astonished")` $a + b = 20$<br> 
 `r emo::ji("smile")` $a + 10 = 20$</span>
 
@@ -381,14 +383,14 @@ class: middle, center
 
 .pull-left-60[
 
-<span style="font-size: 60%;">
-Observed Variance/Covariance Matrix<br>
+<span style="font-size: 70%;">
+**Observed Variance/Covariance Matrix**<br>
 </span>
 
 `r t01`
 
 <span style="font-size: 70%;">
-.highlight[Just Identified.]<br>
+**Implied Variance/Covariance Matrix**<br>
 </span>
 
 `r t02`
@@ -399,7 +401,8 @@ Observed Variance/Covariance Matrix<br>
 
 <span style="font-size: 60%;">Fix the latent variance to 1.0</span>
 
-<img class="rectangle" src="img/setscale1.png" width="275px"/>
+<img class="rectangle" src="img/setscale1.png" width="275px"/><br>
+.highlight[.small[<span style="color: white;">Just Identified. </span>]]
  
 ]
 
@@ -411,14 +414,14 @@ class: middle, center
 
 .pull-left-60[
 
-<span style="font-size: 60%;">
-Observed Variance/Covariance Matrix<br>
+<span style="font-size: 70%;">
+**Observed Variance/Covariance Matrix**<br>
 </span>
 
 `r t01`
 
 <span style="font-size: 70%;">
-.highlight[Just Identified.]<br>
+**Implied Variance/Covariance Matrix**<br>
 </span>
 
 `r t03`
@@ -441,14 +444,14 @@ class: middle, center
 
 .pull-left-60[
 
-<span style="font-size: 60%;">
-Observed Variance/Covariance Matrix<br>
+<span style="font-size: 70%;">
+**Observed Variance/Covariance Matrix**<br>
 </span>
 
 `r t01`
 
 <span style="font-size: 70%;">
-.highlight[Just Identified.]<br>
+**Implied Variance/Covariance Matrix**<br>
 </span>
 
 `r t04`
@@ -470,7 +473,7 @@ class: middle, center
 .pull-left-60[
 
 <span style="font-size: 70%;">
-Observed Variance/Covariance Matrix<br>
+**Observed Variance/Covariance Matrix**<br>
 </span>
 
 <img class="rectangle" src="img/cfa5.png" width="400px"/>
@@ -491,7 +494,7 @@ class: left, middle
 ## Reporting Model Specification `r emo::ji("page_facing_up")` 
 
 .small[.small[
-> **A three-factor confirmatory factor analysis (CFA) was conducted to assess the measurement properties of three latent constructs: Cognitive Engagement, Behavioral Engagement, and Emotional Engagement.** The Cognitive Engagement factor was measured by three items: "I try to understand difficult concepts in class" (CE1), "I make connections between what I learn and real life" (CE2), and "I seek additional information on topics that interest me" (CE3). The Behavioral Engagement factor included three items: "I complete my assignments on time" (BE1), "I participate actively in class discussions" (BE2), and "I follow classroom rules" (BE3). The Emotional Engagement factor was measured by three items: "I feel excited about learning new things" (EE1), "I enjoy working on challenging tasks" (EE2), and "I feel connected to my classmates" (EE3). **Factor variances were fixed to 1.0 for model identification (Brown, 2012).** 
+> .highlight[<span style="color: white;">A three-factor confirmatory factor analysis (CFA) was conducted to assess the measurement properties of three latent constructs: Cognitive Engagement, Behavioral Engagement, and Emotional Engagement.</span>] **The Cognitive Engagement factor was measured by three items: "I try to understand difficult concepts in class" (CE1), "I make connections between what I learn and real life" (CE2), and "I seek additional information on topics that interest me" (CE3). The Behavioral Engagement factor included three items: "I complete my assignments on time" (BE1), "I participate actively in class discussions" (BE2), and "I follow classroom rules" (BE3). The Emotional Engagement factor was measured by three items: "I feel excited about learning new things" (EE1), "I enjoy working on challenging tasks" (EE2), and "I feel connected to my classmates" (EE3).** .highlight[<span style="color: white;">Factor variances were fixed to 1.0 for model identification (Brown, 2012).</span>] 
 ]]
 
 ---

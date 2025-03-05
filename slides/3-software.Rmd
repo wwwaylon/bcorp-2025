@@ -134,7 +134,7 @@ t5 <- kable(data, format = "html", align = "l") %>%
 
 ```
 
-class: middle, left
+class: middle, center
 
 .pull-left[
 <span style="font-size: 80%;">`r t5`</span>
@@ -146,7 +146,7 @@ class: middle, left
 <img class="rectangle" src="img/sup3.png" width="800px"/>
 ]
 
-<span style="font-size: 60%;">Perceived Social Support (latent SUP) accounts for **85.6%**</span><span style="font-size: 50%;"> $(0.925^2 = 0.856)$ </span><span style="font-size: 60%;">of the variance in the indicator SUP1. Also, 0.856 + 0.143 = 1.00</span>
+<span style="font-size: 60%;">**Perceived Social Support (latent SUP) explains** .highlight[<span style="color: white;">85.6%</span>] **of the variance in the indicator SUP1 $(0.925^2 = 0.856)$. Additionally, the correlation for SUP1 and SUP2 is $(0.925*0.949)=0.87$ **</span>
 
 ---
 
@@ -337,6 +337,15 @@ class: middle, center
 ---
 
 name: 
-class: middle, center
+class: middle, left
 
-## <center><span style="font-size: 60%;">End</span></center>
+## <center><span style="font-size: 70%;">Thank you for participating!</span></center>
+
+**Next Steps:**  
+.small[
+`r emo::ji("check")` Apply SEM concepts in practice  
+`r emo::ji("check")` Explore advanced topics (e.g., multi-group SEM, longitudinal SEM)  
+`r emo::ji("check")` Stay engaged—join SEM communities & discussions  
+]
+**Questions? Let’s stay connected!**  
+
