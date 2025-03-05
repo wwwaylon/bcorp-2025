@@ -10,9 +10,9 @@ This session is designed to summarize structural equation modeling theory and an
 
 Upon workshop completion, we should
 
-1. Recognize how theory and latent variable modeling procedures have made it possible for applied researchers to effectively apply SEM.
-2. Consider using CFA/SEM methods rather than traditional approaches (which are often simple scale aggregations). 
-3. Discussion of myths and misconceptions when using CFA/SEM. 
+1. Understand the benefits of confirmatory factor analysis in enhancing estimation accuracy.
+2. Gain insight into the derivation of numerical outputs from the model. 
+3. Gain proficiency in applying Mplus, R, and SAS code to implement specific models.
 
 ## Audience & Prerequisites
 
